@@ -3,3 +3,6 @@
 .idea/
 bin/
 obj/
+Windows/
+lINUX/
+MacOS/

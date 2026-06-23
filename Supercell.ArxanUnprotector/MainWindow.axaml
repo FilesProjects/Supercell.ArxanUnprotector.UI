@@ -1,0 +1,159 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        x:Class="Supercell.ArxanUnprotector.MainWindow"
+        Title="Supercell Arxan Unprotector"
+        Width="820"
+        Height="650"
+        MinWidth="820"
+        MinHeight="650"
+        WindowStartupLocation="CenterScreen"
+        Background="#0A0B10"
+        Foreground="#F3F4F6">
+
+    <Grid RowDefinitions="Auto,*,Auto" Margin="25">
+        <!-- заголовок -->
+        <StackPanel Grid.Row="0" Margin="0,0,0,20">
+            <TextBlock Text="SUPERCELL ARXAN UNPROTECTOR" 
+                       FontWeight="Bold" 
+                       FontSize="24" 
+                       LetterSpacing="1"
+                       Foreground="#FFFFFF"/>
+            <TextBlock Text="A modern utility to remove and re-protect Arxan protection" 
+                       FontSize="13" 
+                       Foreground="#9CA3AF" 
+                       Margin="0,5,0,0"/>
+        </StackPanel>
+
+        <!-- контент -->
+        <Border Grid.Row="1" 
+                Background="#11131C" 
+                BorderBrush="#222533" 
+                BorderThickness="1" 
+                CornerRadius="8" 
+                Padding="20"
+                Margin="0,0,0,20">
+            <Grid RowDefinitions="Auto,*,Auto">
+                
+                <!-- выбор действия -->
+                <StackPanel Grid.Row="0" Margin="0,0,0,15">
+                    <TextBlock Text="Select Action" FontSize="12" FontWeight="SemiBold" Foreground="#9CA3AF" Margin="0,0,0,5"/>
+                    <ComboBox Name="ActionSelector" 
+                              HorizontalAlignment="Stretch" 
+                              SelectedIndex="0"
+                              Background="#1B1E2E"
+                              BorderBrush="#2D314C"
+                              CornerRadius="5">
+                        <ComboBoxItem Content="Decrypt Strings (Original -> Decrypted)"/>
+                        <ComboBoxItem Content="Encrypt Strings (Original + Decrypted -> Encrypted)"/>
+                        <ComboBoxItem Content="Update Checksums (Original + Modified -> Updated)"/>
+                        <ComboBoxItem Content="Verify Checksums (Original + Modified -> Verify Result)"/>
+                    </ComboBox>
+                </StackPanel>
+
+                <!-- поля ввода -->
+                <StackPanel Grid.Row="1" Spacing="15" VerticalAlignment="Top">
+                    
+                    <!-- оригинальный файл -->
+                    <StackPanel Name="OriginalPanel">
+                        <TextBlock Text="Original Library File (-i)" FontSize="12" FontWeight="SemiBold" Foreground="#9CA3AF" Margin="0,0,0,5"/>
+                        <Grid ColumnDefinitions="*,Auto">
+                            <TextBox Name="OriginalPathText" 
+                                     Watermark="Drag and drop or select file..."
+                                     Background="#1B1E2E"
+                                     BorderBrush="#2D314C"
+                                     Foreground="White"
+                                     CornerRadius="5"
+                                     DragDrop.AllowDrop="True"/>
+                            <Button Grid.Column="1" 
+                                    Content="Browse" 
+                                    Name="OriginalBrowseBtn"
+                                    Margin="8,0,0,0"
+                                    Padding="15,6"
+                                    Background="#2D314C"
+                                    Foreground="White"
+                                    CornerRadius="5"/>
+                        </Grid>
+                    </StackPanel>
+
+                    <!-- измененный / расшифрованный файл -->
+                    <StackPanel Name="ModifiedPanel">
+                        <TextBlock Name="ModifiedLabel" Text="Decrypted/Modified Library File (-m)" FontSize="12" FontWeight="SemiBold" Foreground="#9CA3AF" Margin="0,0,0,5"/>
+                        <Grid ColumnDefinitions="*,Auto">
+                            <TextBox Name="ModifiedPathText" 
+                                     Watermark="Drag and drop or select file..."
+                                     Background="#1B1E2E"
+                                     BorderBrush="#2D314C"
+                                     Foreground="White"
+                                     CornerRadius="5"
+                                     DragDrop.AllowDrop="True"/>
+                            <Button Grid.Column="1" 
+                                    Content="Browse" 
+                                    Name="ModifiedBrowseBtn"
+                                    Margin="8,0,0,0"
+                                    Padding="15,6"
+                                    Background="#2D314C"
+                                    Foreground="White"
+                                    CornerRadius="5"/>
+                        </Grid>
+                    </StackPanel>
+
+                    <!-- папка сохранения -->
+                    <StackPanel Name="OutputPanel">
+                        <TextBlock Text="Save Folder (Optional, defaults to input file folder)" FontSize="12" FontWeight="SemiBold" Foreground="#9CA3AF" Margin="0,0,0,5"/>
+                        <Grid ColumnDefinitions="*,Auto">
+                            <TextBox Name="OutputPathText" 
+                                     Watermark="Select folder to save the output file..."
+                                     Background="#1B1E2E"
+                                     BorderBrush="#2D314C"
+                                     Foreground="White"
+                                     CornerRadius="5"/>
+                            <Button Grid.Column="1" 
+                                    Content="Browse" 
+                                    Name="OutputBrowseBtn"
+                                    Margin="8,0,0,0"
+                                    Padding="15,6"
+                                    Background="#2D314C"
+                                    Foreground="White"
+                                    CornerRadius="5"/>
+                        </Grid>
+                    </StackPanel>
+
+                </StackPanel>
+
+                <!-- кнопка запуска -->
+                <Button Grid.Row="2" 
+                        Name="ExecuteBtn" 
+                        Content="Execute Action" 
+                        HorizontalAlignment="Stretch" 
+                        HorizontalContentAlignment="Center"
+                        VerticalAlignment="Bottom"
+                        Padding="0,12" 
+                        FontSize="15" 
+                        FontWeight="Bold"
+                        Background="#4F46E5" 
+                        Foreground="White"
+                        CornerRadius="6"
+                        Cursor="Hand"/>
+                
+            </Grid>
+        </Border>
+
+        <!-- логи / вывод -->
+        <Grid Grid.Row="2" RowDefinitions="Auto,*">
+            <TextBlock Grid.Row="0" Text="Execution Log" FontSize="12" FontWeight="SemiBold" Foreground="#9CA3AF" Margin="0,0,0,5"/>
+            <TextBox Grid.Row="1" 
+                     Name="LogText" 
+                     Height="140"
+                     IsReadOnly="True" 
+                     AcceptsReturn="True" 
+                     TextWrapping="Wrap"
+                     FontFamily="Consolas"
+                     FontSize="12"
+                     Background="#08090E" 
+                     BorderBrush="#1D1E2C"
+                     Foreground="#E5E7EB"
+                     CornerRadius="6"/>
+        </Grid>
+    </Grid>
+
+</Window>
